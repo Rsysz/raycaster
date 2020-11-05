@@ -27,7 +27,7 @@ int16_t RayCasterFixed::MulTan(uint8_t value,
                                bool inverse,
                                uint8_t quarter,
                                uint8_t angle,
-                               const uint16_t *lookupTable)
+                               auto &lookupTable)
 {
     uint8_t signedValue = value;
     if (inverse) {
@@ -50,7 +50,7 @@ int16_t RayCasterFixed::MulTan(uint8_t value,
 
 inline int16_t RayCasterFixed::AbsTan(uint8_t quarter,
                                       uint8_t angle,
-                                      const uint16_t *lookupTable)
+                                      auto &lookupTable)
 {
     if (quarter & 1) {
         return LOOKUP16(lookupTable, INVERT(angle));

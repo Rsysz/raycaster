@@ -1,4 +1,5 @@
 #pragma once
+//#include <array>
 #include "raycaster.h"
 
 class RayCasterFixed : public RayCaster
@@ -33,14 +34,13 @@ private:
                              uint8_t *height,
                              uint16_t *step);
     static bool IsWall(uint8_t tileX, uint8_t tileY);
-    static int16_t MulTan(uint8_t value,
-                          bool inverse,
-                          uint8_t quarter,
-                          uint8_t angle,
-                          const uint16_t *lookupTable);
-    static int16_t AbsTan(uint8_t quarter,
-                          uint8_t angle,
-                          const uint16_t *lookupTable);
+    static int16_t MulTan(
+        uint8_t value,
+        bool inverse,
+        uint8_t quarter,
+        uint8_t angle,
+        auto &lookupTable);  // same as const std::array<uint16_t, TBL_LEN>
+    static int16_t AbsTan(uint8_t quarter, uint8_t angle, auto &lookupTable);
     static uint16_t MulU(uint8_t v, uint16_t f);
     static int16_t MulS(uint8_t v, int16_t f);
 };

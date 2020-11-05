@@ -1,8 +1,10 @@
 #pragma once
 
 #include <stdint.h>
+//#include <array>
 
 /* specify the precalcuated tables */
+#define TBL_LEN 256
 #define TABLES_320
 
 #define SCREEN_WIDTH (uint16_t) 320
