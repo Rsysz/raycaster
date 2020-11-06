@@ -2,6 +2,26 @@
 #include <math.h>
 #include "raycaster_data.h"
 
+void Renderer::ShowFPS(uint16_t fps, uint32_t *fb)
+{
+    for (int i = 1; fps > 0; i++, fps /= 10) {
+        int pos = SCREEN_WIDTH - 15 * i;
+        for (int j = 0; j < 4; j++) {
+            uint32_t *lb = fb + pos + j * 2 + SCREEN_WIDTH;
+            for (int k = 0; k < 16; k++, lb += SCREEN_WIDTH) {
+                int ptr = k / 2;
+                if (g_number[fps % 10][ptr * 4 + j] == 1) {
+                    uint32_t *tb = lb;
+                    for (int x = 0; x < 2; x++) {
+                        *tb = 0x88444444;
+                        tb++;
+                    }
+                }
+            }
+        }
+    }
+}
+
 void Renderer::TraceFrame(Game *g, uint32_t *fb)
 {
     _rc->Start(static_cast<uint16_t>(g->playerX * 256.0f),

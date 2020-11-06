@@ -100,10 +100,12 @@ int main(int argc, char *args[])
             SDL_Texture *floatTexture = SDL_CreateTexture(
                 sdlRenderer, SDL_PIXELFORMAT_ARGB8888,
                 SDL_TEXTUREACCESS_STREAMING, SCREEN_WIDTH, SCREEN_HEIGHT);
-
+            uint16_t fps = 0;
             while (!isExiting) {
                 floatRenderer.TraceFrame(&game, floatBuffer);
                 fixedRenderer.TraceFrame(&game, fixedBuffer);
+
+                floatRenderer.ShowFPS(fps, floatBuffer);
 
                 DrawBuffer(sdlRenderer, fixedTexture, fixedBuffer, 0);
                 DrawBuffer(sdlRenderer, floatTexture, floatBuffer,
@@ -118,6 +120,7 @@ int main(int argc, char *args[])
                 const auto nextCounter = SDL_GetPerformanceCounter();
                 const auto seconds = (nextCounter - tickCounter) /
                                      static_cast<float>(tickFrequency);
+                fps = 1.0f / seconds;
                 tickCounter = nextCounter;
                 game.Move(moveDirection, rotateDirection, seconds);
             }
@@ -127,7 +130,6 @@ int main(int argc, char *args[])
             SDL_DestroyWindow(sdlWindow);
         }
     }
-
     SDL_Quit();
     return 0;
 }
